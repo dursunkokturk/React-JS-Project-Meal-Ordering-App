@@ -22,7 +22,7 @@ If you are developing a production application, we recommend using TypeScript wi
 
 Proje; ağ isteklerini, iş kurallarını, state yönetimini ve arayüzü birbirinden ayırmak için **katmanlı mimari** (services, utils, hooks, components) ile yapılandırılmıştır.
 
-[**Canlı Demo**](#) · [**Hata Bildir**](../../issues)
+[**Canlı Demo**](https://dursunkokturk.github.io/React-JS-Project-Meal-List-With-A-Card) · [**Hata Bildir**](../../issues)
 
 <!-- Buraya bir ekran görüntüsü veya GIF ekle -->
 <!-- ![Meal List Ekran Görüntüsü](./docs/screenshot.png) -->
