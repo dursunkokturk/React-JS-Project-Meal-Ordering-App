@@ -15,7 +15,7 @@ The React Compiler is not enabled on this template because of its impact on dev 
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
 
-# TR
+# 🇹🇷 TR
 # 🍽️ Meal List
 
 **React** ile geliştirilmiş, mobil ve masaüstü uyumlu bir yemek sipariş web uygulaması. Kullanıcılar bir REST API'den gelen menüyü görüntüler, yemekleri sepete ekler, adetleri değiştirir ve siparişlerini onaylar.
@@ -180,7 +180,7 @@ Bu proje MIT Lisansı ile lisanslanmıştır.
 
 ------------------------------------
 
-# EN
+# 🇬🇧 EN
 # 🍽️ Meal List
 
 A responsive food-ordering web app built with **React**. Users browse a menu fetched from a REST API, add meals to a cart, adjust quantities, and confirm their order.
