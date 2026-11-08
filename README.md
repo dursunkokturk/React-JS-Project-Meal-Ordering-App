@@ -15,6 +15,170 @@ The React Compiler is not enabled on this template because of its impact on dev 
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
 
+# TR
+# 🍽️ Meal List
+
+**React** ile geliştirilmiş, mobil ve masaüstü uyumlu bir yemek sipariş web uygulaması. Kullanıcılar bir REST API'den gelen menüyü görüntüler, yemekleri sepete ekler, adetleri değiştirir ve siparişlerini onaylar.
+
+Proje; ağ isteklerini, iş kurallarını, state yönetimini ve arayüzü birbirinden ayırmak için **katmanlı mimari** (services, utils, hooks, components) ile yapılandırılmıştır.
+
+[**Canlı Demo**](#) · [**Hata Bildir**](../../issues)
+
+<!-- Buraya bir ekran görüntüsü veya GIF ekle -->
+<!-- ![Meal List Ekran Görüntüsü](./docs/screenshot.png) -->
+
+---
+
+## ✨ Özellikler
+
+- REST API'den gelen yemekleri listeleme
+- Sepete ekleme, adet artırma/azaltma ve ürün silme
+- Anlık sepet adedi ve sipariş toplamı
+- Ürün detaylarını içeren sipariş onay modalı
+- "Teşekkürler" ekranı ve yeni sipariş akışı
+- Yükleniyor (spinner), hata (tekrar dene butonlu) ve boş sepet durumları
+- Mobil, tablet ve masaüstü için tam responsive yerleşim
+
+---
+
+## 🛠️ Teknolojiler
+
+| Alan | Teknoloji |
+|---|---|
+| Arayüz | React (fonksiyonel component'ler, hook'lar) |
+| Build aracı | Vite |
+| Stil | CSS3 (Grid, Flexbox, media query) |
+| Veri | [DummyJSON Recipes API](https://dummyjson.com/docs/recipes) |
+
+---
+
+## 🏗️ Mimari
+
+Uygulama, her katmanın tek bir sorumluluğa sahip olduğu ve yalnızca altındaki katmanlara bağımlı olduğu katmanlı bir yapıyı izler.
+
+```mermaid
+flowchart TD
+    A[components<br/>sadece arayüz] --> B[hooks<br/>state ve aksiyonlar]
+    B --> C[utils<br/>saf iş mantığı]
+    B --> D[services<br/>API çağrıları]
+    D --> C
+```
+
+| Katman | Sorumluluk |
+|---|---|
+| `services/` | Ağ istekleri ve response yönetimi. React ve arayüz bilgisi yok. |
+| `utils/` | Saf fonksiyonlar: sepet işlemleri, fiyat hesaplama, formatlama. |
+| `hooks/` | State'i yöneten ve aksiyonları arayüze sunan custom hook'lar. |
+| `components/` | Veriyi ve callback'leri prop olarak alan görünüm component'leri. |
+| `App.jsx` | Composition kökü: hook'ları ve component'leri birleştirir. |
+
+### Proje Yapısı
+
+```
+src/
+├── assets/img/
+├── services/
+│   └── recipeService.js        # fetch + response.ok kontrolü + fiyat ekleme
+├── utils/
+│   ├── price.js                # generatePrice, formatPrice
+│   └── cartUtils.js            # ekle / artır / azalt / sil / toplamlar
+├── hooks/
+│   ├── useRecipes.js           # veri çekme, loading/error state, refetch
+│   └── useCart.js              # sepet state'i ve aksiyonları
+├── components/
+│   ├── common/                 # LoadingScreen, ErrorScreen
+│   ├── recipes/                # RecipeList, RecipeCard
+│   ├── cart/                   # Cart, CartItem
+│   └── modals/                 # OrderConfirmedModal, ThankYouModal
+├── App.jsx
+├── App.css
+└── main.jsx
+```
+
+---
+
+## 💡 Temel Tasarım Kararları
+
+- **API çağrıları için service katmanı.** Base URL, hata yönetimi ve veri dönüşümü tek bir yerde durur, böylece component'ler verinin nasıl çekildiğini bilmez.
+- **HTTP hata yönetimi.** `fetch`, 4xx/5xx cevaplarında reject olmaz. Bu yüzden service katmanı `response.ok` kontrolü yapar ve arayüzde gösterilebilecek anlamlı bir hata fırlatır.
+- **Saf sepet fonksiyonları.** Her sepet işlemi mevcut sepeti alır ve orijinali değiştirmeden yeni bir sepet döndürür. Bu, mantığı öngörülebilir kılar ve React olmadan kolayca birim test edilmesini sağlar.
+- **Custom hook'lar.** `useRecipes` ve `useCart`, component'leri veri çekme ve state yönetimi kodundan arındırır.
+- **Üretilen fiyatlar.** API'de fiyat alanı bulunmadığı için `generatePrice(id)` fonksiyonu yemeğin ID'sinden deterministik bir fiyat üretir. Fiyatlar sayfa yenilense de sabit kalır.
+- **Mobile-first CSS.** Temel stiller mobile göre yazılmış, tablet ve masaüstü için media query'lerle genişletilmiştir.
+
+---
+
+## 🚀 Başlarken
+
+### Gereksinimler
+
+- Node.js 18 veya üzeri
+- npm (veya yarn / pnpm)
+
+### Kurulum
+
+```bash
+# Repoyu klonla
+git clone https://github.com/<kullanici-adin>/<repo-adin>.git
+
+# Proje klasörüne gir
+cd <repo-adin>
+
+# Bağımlılıkları yükle
+npm install
+
+# Geliştirme sunucusunu başlat
+npm run dev
+```
+
+Uygulama `http://localhost:5173` adresinde çalışacaktır.
+
+### Kullanılabilir Komutlar
+
+| Komut | Açıklama |
+|---|---|
+| `npm run dev` | Geliştirme sunucusunu başlatır |
+| `npm run build` | Production build oluşturur |
+| `npm run preview` | Production build'i yerelde önizler |
+
+---
+
+## 🔌 API
+
+Veriler herkese açık DummyJSON API'sinden gelir:
+
+```
+GET https://dummyjson.com/recipes
+```
+
+Her tarif, `recipeService.js` içinde üretilen bir `price` alanıyla zenginleştirilir.
+
+---
+
+## 🗺️ Yol Haritası
+
+- [ ] `cartUtils.js` için Vitest ile birim testleri
+- [ ] Sepetin `localStorage` içinde saklanması
+- [ ] Arama ve mutfak türüne göre filtreleme
+- [ ] API'nin `limit` ve `skip` parametreleriyle sayfalama
+- [ ] `AbortController` ile istek iptali
+- [ ] CSS'in component bazlı dosyalara veya CSS Modules'a bölünmesi
+- [ ] TypeScript'e geçiş
+
+---
+
+## 📄 Lisans
+
+Bu proje MIT Lisansı ile lisanslanmıştır.
+
+---
+
+## 👤 Geliştirici
+
+**Adın Soyadın**
+[LinkedIn](#) · [GitHub](#)
+
+------------------------------------
 
 # EN
 # 🍽️ Meal List
