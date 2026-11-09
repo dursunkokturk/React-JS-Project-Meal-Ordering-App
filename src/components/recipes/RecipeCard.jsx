@@ -14,6 +14,8 @@ export default function RecipeCard({
           src={recipe.image}
           className={`product-photo ${cartItem ? 'product-photo-active' : ''}`}
           alt={recipe.name}
+          loading="lazy"
+          referrerPolicy="no-referrer"
         />
 
         {!cartItem ? (
