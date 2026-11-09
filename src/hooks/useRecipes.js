@@ -14,8 +14,9 @@ export default function useRecipes() {
       const data = await fetchRecipes()
       setRecipes(data)
     } catch (err) {
-      console.error(err)
-      setError(err.message || 'Something went wrong')
+      // Teknik Hata Kullanicidan Gizlendi, Sadece Gelistirici Konsolunda Gorunuyor
+      if (import.meta.env.DEV) console.error(err)
+      setError('The menu could not be loaded. Please try again.')
     } finally {
       setLoading(false)
     }
