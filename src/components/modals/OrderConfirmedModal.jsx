@@ -11,7 +11,12 @@ export default function OrderConfirmedModal({ cart, totalPrice, onClose }) {
         <div className="modal-items">
           {cart.map((item) => (
             <div key={item.id} className="modal-item">
-              <img src={item.image} alt={item.name} className="modal-item-img" />
+              <img
+                src={item.image}
+                alt={item.name}
+                className="modal-item-img"
+                referrerPolicy="no-referrer"
+              />
               <div className="modal-item-info">
                 <p className="modal-item-name">{item.name}</p>
                 <span className="modal-item-quantity">{item.quantity}x</span>
