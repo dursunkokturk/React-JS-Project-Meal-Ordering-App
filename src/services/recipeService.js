@@ -1,8 +1,11 @@
 import { generatePrice } from '../utils/price'
 
 const BASE_URL = 'https://dummyjson.com'
+
+// Data'nin Gelmesi Icin Uzun Sure Beklenmeyecek
 const TIMEOUT_MS = 8000
 
+// Data'nin Geldigi URL Icin HTTP Protokol Kullanimi Kontrolu Yapiliyor
 const isHttps = (url) => {
   try {
     return new URL(url).protocol === 'https:'
@@ -11,7 +14,7 @@ const isHttps = (url) => {
   }
 }
 
-// Dış API'den gelen verinin tamamı değil sadece ihtiyaç duyulan alanlar, doğru tiple alındı
+// Dis API'dan gelen verinin tamamı değil sadece ihtiyaç duyulan alanlar, doğru tiple alındı
 const sanitizeRecipe = (recipe) => {
   const id = Number(recipe.id)
   if (!Number.isFinite(id)) return null
